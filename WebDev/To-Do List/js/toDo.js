@@ -7,14 +7,14 @@ class toDo {
 	static id = -1;
 
 	constructor(config) {
-		this.id = config.id || ++id,
+		this.id = config.id !== undefined ? config.id : ++toDo.id,
 		this.name = config.name,
 		this.hour = config.hour || new Date().getHours(),
 		this.minute = config.minute || new Date().getMinutes(),
-		this.month = config.month || new Date().getMonth(),
+		this.month = config.month || monthName[new Date().getMonth()],
 		this.day = config.day || dayName[new Date().getDay()];
 		this.year = config.year || new Date().getFullYear();
-		this.time = config.time || new Date(`${month} ${day}, ${year} ${hour}:${minute}`),
+		this.time = config.time || new Date(`${this.month} ${this.day}, ${this.year} ${this.hour}:${this.minute}`),
 		this.timeCreated = config.timeCreated || Date.now(),
 		this.lastUpdated = config.lastUpdated || Date.now(),
 		this.description = config.description || "",

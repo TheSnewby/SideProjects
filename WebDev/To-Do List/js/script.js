@@ -15,22 +15,22 @@ document.addEventListener("DOMContentLoaded", function() {
 		try {
 			const parsedToDos = JSON.parse(savedData);
 			toDoList = parsedToDos.map((data) => {
-				return new toDo(
-					data.id,
-					data.name,
-					data.hour,
-					data.minute,
-					data.month,
-					data.day,
-					data.year,
-					data.time,
-					data.timeCreated,
-					data.lastUpdated,
-					data.description,
-					data.weblink,
-					data.address,
-					data.completed
-				);
+				return new toDo({
+					id: data.id,
+					name: data.name,
+					hour: data.hour,
+					minute: data.minute,
+					month: data.month,
+					day: data.day,
+					year: data.year,
+					time: data.time,
+					timeCreated: data.timeCreated,
+					lastUpdated: data.lastUpdated,
+					description: data.description,
+					weblink: data.weblink,
+					address: data.address,
+					completed: data.completed
+			});
 			});
 		} catch (error) {
 			console.error("Error parsing toDos from localStorage:", error);
@@ -114,11 +114,25 @@ document.addEventListener("DOMContentLoaded", function() {
 	const toDoAmPm = document.getElementById("todo-am-pm").value;
 	//insert leap year and month day logic checks
 
-	let HI = new toDo(toDoName, toDoDescription, toDoHour, toDoMinute,
-		toDoMonth, toDoDay, toDoYear, 
-	);
+	let actualHour = Number(actualHour);
+	if (toDoAmPm === "PM" && toDoHour !== "12")
+	{
+		actualHour = Number(toDoHour) + 12;
+	} else if (toDoAmPm === "AM" && toDoHour === "12") {
+		actualHour = Number(toDoHour) - 12;
+	}
 
-	//convert to correct types
-	//create new toDo object
+	let newToDo = new toDo({
+		name: toDoName,
+		description: toDoDescription,
+		hour: actualHour,
+		minute: toDoMinute,
+		month: toDoMonth,
+		day: toDoDay,
+		year: toDoYear,
+		weblink: toDoWeblink,
+		address: toDoAddress,
+	});
+
 	//update the localStorage
 });
